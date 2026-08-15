@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="一个轻量的个人任务管理工具" />
+    <title>今日清单</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow" id="today-label"></p>
+          <h1>今日清单</h1>
+          <p class="subheading">把注意力留给真正重要的事。</p>
+        </div>
+        <div class="daily-status" aria-label="今日完成情况">
+          <span class="status-number" id="progress-number">0</span>
+          <span class="status-label">项已完成</span>
+        </div>
+      </header>
+
+      <section class="overview" aria-label="任务概览">
+        <div class="stat-item">
+          <span>全部任务</span>
+          <strong id="all-count">0</strong>
+        </div>
+        <div class="stat-item">
+          <span>待完成</span>
+          <strong id="open-count">0</strong>
+        </div>
+        <div class="stat-item accent">
+          <span>今天到期</span>
+          <strong id="today-count">0</strong>
+        </div>
+      </section>
+
+      <section class="add-task" aria-labelledby="add-task-title">
+        <div class="section-heading">
+          <h2 id="add-task-title">添加任务</h2>
+          <p>写下下一件要做的事。</p>
+        </div>
+        <form id="task-form" novalidate>
+          <label class="task-title-field" for="task-title">
+            <span class="sr-only">任务名称</span>
+            <input id="task-title" name="title" type="text" maxlength="80" placeholder="例如：完成本周学习计划" autocomplete="off" />
+          </label>
+          <label for="task-priority">
+            <span>优先级</span>
+            <select id="task-priority" name="priority">
+              <option value="medium">中</option>
+              <option value="high">高</option>
+              <option value="low">低</option>
+            </select>
+          </label>
+          <label for="task-category">
+            <span>分类（可选）</span>
+            <select id="task-category" name="category">
+              <option value="">未选择</option>
+              <option value="study">学习</option>
+              <option value="work">工作</option>
+              <option value="life">生活</option>
+            </select>
+          </label>
+          <label for="task-due-date">
+            <span>截止日期</span>
+            <input id="task-due-date" name="dueDate" type="date" />
+          </label>
+          <button class="primary-button" type="submit">添加任务</button>
+          <label class="task-note-field" for="task-note">
+            <span>备注（可选）</span>
+            <textarea id="task-note" name="note" maxlength="200" rows="2" placeholder="补充地点、资料链接或注意事项"></textarea>
+          </label>
+        </form>
+        <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="task-section" aria-labelledby="task-list-title">
+        <div class="task-toolbar">
+          <div>
+            <h2 id="task-list-title">任务列表</h2>
+            <p id="list-summary">还没有任务</p>
+          </div>
+          <div class="filters" role="group" aria-label="任务筛选">
+            <button class="filter-button is-active" type="button" data-filter="all">全部</button>
+            <button class="filter-button" type="button" data-filter="open">待完成</button>
+            <button class="filter-button" type="button" data-filter="today">今天</button>
+            <button class="filter-button" type="button" data-filter="done">已完成</button>
+          </div>
+        </div>
+        <ul class="task-list" id="task-list" aria-live="polite"></ul>
+      </section>
+    </main>
+    <template id="task-template">
+      <li class="task-item">
+        <label class="complete-control">
+          <input class="task-checkbox" type="checkbox" />
+          <span class="check-indicator" aria-hidden="true"></span>
+          <span class="task-copy">
+            <strong class="task-name"></strong>
+            <span class="task-meta"></span>
+            <span class="task-note"></span>
+          </span>
+        </label>
+        <button class="delete-button" type="button">删除</button>
+      </li>
+    </template>
+    <script src="app.js"></script>
+  </body>
+</html>
